@@ -1,7 +1,5 @@
 package com.sillythewanderer.client
 
-import java.util.stream.Gatherer
-
 const val dict =
         " ~1234567890-=QWERTYUIOP[]\\ASDFGHJKL;'ZXCVBNM,./!@#$%^&*()_+qwertyuiop{}|asdfghjkl:\"zxcvbnm<>?þθđ•◦∃→∀∨¬"
 
@@ -63,6 +61,53 @@ const val dict =
     }
 // This function takes two inputs, a number, and a set of numbers. The function then adds the number to each number in the set of numbers, and returns the new set of numbers
 
+fun add_chars(original_char: Char, key_char: Char): Char {
+
+    return num_to_char(((index(original_char) + index(key_char))+length) % length)
+}
+
+fun subtract_chars(original_char: Char, key_char: Char): Char {
+    return num_to_char(((index(original_char) - index(key_char))+length) % length)
+}
+
+fun add_strings(original_string: String, key_string: String): String {
+    val true_key = StringBuilder()
+    if (original_string.length > key_string.length) {
+        while (true_key.toString().length < original_string.length) {
+            true_key.append(key_string)
+        }
+    }
+    true_key.append(key_string)
+
+    var i = 0
+    var result = StringBuilder()
+
+    while (i != original_string.length) {
+        result.append(add_chars(original_string[i], true_key.toString()[i]))
+        i++
+    }
+    return result.toString()
+}
+
+fun subtract_strings(original_string: String, key_string: String): String {
+    val true_key = StringBuilder()
+    if (original_string.length > key_string.length) {
+        while (true_key.toString().length < original_string.length) {
+            true_key.append(key_string)
+        }
+    }
+    true_key.append(key_string)
+
+    var i = 0
+    var result = StringBuilder()
+
+    while (i != original_string.length) {
+        result.append(subtract_chars(original_string[i], true_key.toString()[i]))
+        i++
+    }
+    return result.toString()
+}
+
 fun encrypt_with_num(encryption_number: Int, message: String): String {
         return numS_to_string(add_num_to_numS(encryption_number, string_to_num(message)))
 }
@@ -74,3 +119,5 @@ fun encrypt(message: String): String {
 fun decrypt(message: String): String {
     return encrypt_with_num(-index(message.first()), message).drop(1)
 }
+
+

@@ -37,7 +37,25 @@ public class Silly_cipherClient implements ClientModInitializer {
 							.then(ClientCommands.argument("plaintext", StringArgumentType.string())
 							.executes(context -> Silly_cipher_commands.executeCipherCommandDecrypt(
 									StringArgumentType.getString(context, "plaintext"), context)))
-			));
+
+				).then(ClientCommands.literal("encrypt_with_password")
+							.then(ClientCommands.argument("password", StringArgumentType.string())
+							.then(ClientCommands.argument("plaintext", StringArgumentType.string())
+									.executes(context -> Silly_cipher_commands.executeCipherCommandEncryptWithPassword(
+											StringArgumentType.getString(context, "password"),
+											StringArgumentType.getString(context, "plaintext"), context)
+									)
+							))
+
+				).then(ClientCommands.literal("decrypt_with_password")
+							.then(ClientCommands.argument("password", StringArgumentType.string())
+									.then(ClientCommands.argument("plaintext", StringArgumentType.string())
+											.executes(context -> Silly_cipher_commands.executeCipherCommandDecryptWithPassword(
+													StringArgumentType.getString(context, "password"),
+															StringArgumentType.getString(context, "plaintext"), context)
+													)
+											)
+							)));
 		});
 
 	}

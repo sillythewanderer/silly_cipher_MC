@@ -78,4 +78,36 @@ public class Silly_cipher_commands {
         return 1;
     }
 
+    public static int executeCipherCommandEncryptWithPassword(String password, String plaintext, CommandContext<FabricClientCommandSource> context) {
+        String ciphertext = add_strings(plaintext, password);
+
+        Component output = Component.literal("Cipher result: ")
+                .append(Component.literal(ciphertext)
+                        .withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE)
+                        .withStyle(style -> style
+                                .withClickEvent(new ClickEvent.CopyToClipboard(ciphertext))
+                                .withHoverEvent(new HoverEvent.ShowText(Component.literal("Click to copy ciphertext")))
+                        )
+                );
+
+        context.getSource().sendFeedback(output);
+        return 1;
+    }
+
+    public static int executeCipherCommandDecryptWithPassword(String password, String plaintext, CommandContext<FabricClientCommandSource> context) {
+        String ciphertext = subtract_strings(plaintext, password);
+
+        Component output = Component.literal("Cipher result: ")
+                .append(Component.literal(ciphertext)
+                        .withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE)
+                        .withStyle(style -> style
+                                .withClickEvent(new ClickEvent.CopyToClipboard(ciphertext))
+                                .withHoverEvent(new HoverEvent.ShowText(Component.literal("Click to copy ciphertext")))
+                        )
+                );
+
+        context.getSource().sendFeedback(output);
+        return 1;
+    }
+
 }
