@@ -1,6 +1,8 @@
 package com.sillythewanderer.client
 
-    const val dict =
+import java.util.stream.Gatherer
+
+const val dict =
         " ~1234567890-=QWERTYUIOP[]\\ASDFGHJKL;'ZXCVBNM,./!@#$%^&*()_+qwertyuiop{}|asdfghjkl:\"zxcvbnm<>?þθđ•◦∃→∀∨¬"
 
     // the set of all characters
@@ -61,6 +63,14 @@ package com.sillythewanderer.client
     }
 // This function takes two inputs, a number, and a set of numbers. The function then adds the number to each number in the set of numbers, and returns the new set of numbers
 
-    fun encrypt(encryption_number: Int, message: String): String {
+fun encrypt_with_num(encryption_number: Int, message: String): String {
         return numS_to_string(add_num_to_numS(encryption_number, string_to_num(message)))
-    }
+}
+
+fun encrypt(message: String): String {
+    return message.last() + encrypt_with_num(index(message.last()), message)
+}
+
+fun decrypt(message: String): String {
+    return encrypt_with_num(-index(message.first()), message).drop(1)
+}

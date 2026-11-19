@@ -7,4 +7,9 @@ Please also remember to install [Fabric API](https://modrinth.com/mod/fabric-api
 For setup instructions, please see the [Fabric Documentation page](https://docs.fabricmc.net/develop/getting-started/creating-a-project#setting-up) related to the IDE that you are using.
 
 ## Usage in game
-Using the mod is quite simple. All current functionality is in the `/cipher` command. Currently there is only one subcommand `encrypt`, but other subcommands will be added to give the player more ways of encrypting text.
+Using the mod is quite simple. All current functionality is in the `/cipher` command. Currently there are three subcommands `encrypt`, `decrypt`, and `encrypt_using_num`.
+
+In general the form for each command is `/cipher <subcommand> <arguments>`
+
+for any text, please ensure that any occurences of the backslash `\` character are double: `\\`,
+also ensure that all text (other than numbers and individual characters) is within quote marks: `"___"`.

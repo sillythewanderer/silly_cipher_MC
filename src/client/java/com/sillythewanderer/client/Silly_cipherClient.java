@@ -16,17 +16,29 @@ public class Silly_cipherClient implements ClientModInitializer {
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
 
 		ClientCommandRegistrationCallback.EVENT.register((dispatcher, commandBuildContext) -> {
-			dispatcher.register(ClientCommands.literal("cipher").then(ClientCommands.literal("encrypt")
-					.then(ClientCommands.argument("encryption_number", IntegerArgumentType.integer())
+			dispatcher.register(ClientCommands.literal("cipher")
+				.then(ClientCommands.literal("encrypt_using_num")
+						.then(ClientCommands.argument("encryption_number", IntegerArgumentType.integer())
+								.then(ClientCommands.argument("plaintext", StringArgumentType.string())
+										.executes(context -> Silly_cipher_commands.executeCipherCommandEncryptWithNum(
+												IntegerArgumentType.getInteger(context, "encryption_number"),
+												StringArgumentType.getString(context, "plaintext"),
+												context)
+										)
+								)
+						)
+				).then(ClientCommands.literal("encrypt")
+					.then(ClientCommands.argument("plaintext", StringArgumentType.string())
+							.executes(context -> Silly_cipher_commands.executeCipherCommandEncrypt(
+							StringArgumentType.getString(context, "plaintext"), context)))
+					)
+
+				.then(ClientCommands.literal("decrypt")
 							.then(ClientCommands.argument("plaintext", StringArgumentType.string())
-									.executes(context -> Silly_cipher_commands.executeCipherCommandEncrypt(
-											IntegerArgumentType.getInteger(context, "encryption_number"),
-											StringArgumentType.getString(context, "plaintext"),
-											context))))));
+							.executes(context -> Silly_cipher_commands.executeCipherCommandDecrypt(
+									StringArgumentType.getString(context, "plaintext"), context)))
+			));
 		});
-
-
-
 
 	}
 }

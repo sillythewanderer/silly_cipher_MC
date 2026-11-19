@@ -9,10 +9,12 @@ import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 
+import static com.sillythewanderer.client.Cipher_functionsKt.*;
+
 public class Silly_cipher_commands {
 
     public static int executeCipherCommand(int encryptionNumber, String plaintext, CommandContext<FabricClientCommandSource> context) {
-        String ciphertext = Cipher_functionsKt.encrypt(encryptionNumber, plaintext);
+        String ciphertext = encrypt_with_num(encryptionNumber, plaintext);
 
         Component output = Component.literal("Cipher result: ")
                 .append(Component.literal(ciphertext)
@@ -27,8 +29,41 @@ public class Silly_cipher_commands {
         return 1;
     }
 
-    public static int executeCipherCommandEncrypt(int encryptionNumber, String plaintext, CommandContext<FabricClientCommandSource> context) {
-        String ciphertext = Cipher_functionsKt.encrypt(encryptionNumber, plaintext);
+    public static int executeCipherCommandEncryptWithNum(int encryptionNumber, String plaintext, CommandContext<FabricClientCommandSource> context) {
+        String ciphertext = encrypt_with_num(encryptionNumber, plaintext);
+
+        Component output = Component.literal("Cipher result: ")
+                .append(Component.literal(ciphertext)
+                        .withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE)
+                        .withStyle(style -> style
+                                .withClickEvent(new ClickEvent.CopyToClipboard(ciphertext))
+                                .withHoverEvent(new HoverEvent.ShowText(Component.literal("Click to copy ciphertext")))
+                        )
+                );
+
+        context.getSource().sendFeedback(output);
+        return 1;
+    }
+
+
+    public static int executeCipherCommandEncrypt(String plaintext, CommandContext<FabricClientCommandSource> context) {
+        String ciphertext = encrypt(plaintext);
+
+        Component output = Component.literal("Cipher result: ")
+                .append(Component.literal(ciphertext)
+                        .withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE)
+                        .withStyle(style -> style
+                                .withClickEvent(new ClickEvent.CopyToClipboard(ciphertext))
+                                .withHoverEvent(new HoverEvent.ShowText(Component.literal("Click to copy ciphertext")))
+                        )
+                );
+
+        context.getSource().sendFeedback(output);
+        return 1;
+    }
+
+    public static int executeCipherCommandDecrypt(String plaintext, CommandContext<FabricClientCommandSource> context) {
+        String ciphertext = decrypt(plaintext);
 
         Component output = Component.literal("Cipher result: ")
                 .append(Component.literal(ciphertext)
